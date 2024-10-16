@@ -21,100 +21,83 @@ echo #######################################################################
 echo.
 echo [-] 正在收集IP信息已收集完毕
 echo ========== IP 信息 ========== >> result\info.txt 2>nul
-ipconfig /all >> result\info.txt 2>nul
+ipconfig /all >> result\IP信息.txt 2>nul
 echo [*] IP信息已收集完毕
 
 
 echo [-] 正在收集用户信息及SID
-echo ========== 用户信息及 SID ========== >> result\info.txt 2>nul
-net user >> result\info.txt 2>nul
-wmic useraccount get name,sid,Description >> result\info.txt 2>nul
+net user >> result\用户信息及SID.txt 2>nul
+wmic useraccount get name,sid,Description >> result\用户信息及SID.txt 2>nul
 echo [*] 用户信息及 SID 已收集完毕
 
 
 echo [-] 正在收集网络连接信息
-echo ========== 网络连接 ========== >> result\info.txt 2>nul
-netstat -ano >> result\info.txt 2>nul
+netstat -ano >> result\网络连接信息.txt 2>nul
 echo [*] 网络连接信息已收集完毕
 
 
 echo [-] 正在收集ARP信息
-echo ========== ARP 信息 ========== >> result\info.txt 2>nul
-arp -a >> result\info.txt 2>nul
+arp -a >> result\ARP信息.txt 2>nul
 echo [*] ARP信息已收集完毕
 
 
 echo [-] 正在收集HOST文件信息
-echo ========== HOST 信息 ========== >> result\info.txt 2>nul
-type %SystemRoot%\System32\drivers\etc\hosts >> result\info.txt 2>nul
+type %SystemRoot%\System32\drivers\etc\hosts >> result\HOST文件信息.txt 2>nul
 echo [*] HOST文件信息已收集完毕
 
 
 echo [-] 正在收集系统信息
-echo ========== 系统信息 ========== >> result\info.txt 2>nul
 for /f "delims=" %%a in ('wmic os get Caption^,CSName^,OSArchitecture^,Version^,BuildNumber /value') do (
     set "%%a"
-    echo OS: %Caption%, %OSArchitecture%, Version %Version% Build %BuildNumber% >> result\info.txt 2>nul
+    echo OS: %Caption%, %OSArchitecture%, Version %Version% Build %BuildNumber% >> result\系统信息.txt 2>nul
 )
 echo [*] 系统信息已收集完毕
 
 
 echo [-] 正在收集用户最近访问记录
-echo ========== 用户最近访问记录 ========== >> result\info.txt 2>nul
-dir %APPDATA%\Microsoft\Windows\Recent >> result\info.txt 2>nul
+dir %APPDATA%\Microsoft\Windows\Recent >> result\用户最近访问记录.txt 2>nul
 echo [*] 用户最近访问记录收集完毕
 
 
 echo [-] 正在收集计划任务信息
-echo ========== 计划任务 ========== >> result\info.txt 2>nul
-schtasks /query /fo LIST /v >> result\info.txt 2>nul
+schtasks /query /fo LIST /v >> result\计划任务信息.txt 2>nul
 echo [*] 计划任务信息已收集完毕
 
 
 echo [-] 正在收集 Windows Temp 文件信息
-echo ========== Windows Temp 文件 ========== >> result\info.txt 2>nul
-dir %SystemRoot%\Temp >> result\info.txt 2>nul
+dir %SystemRoot%\Temp >> result\WindowsTemp文件信息.txt 2>nul
 echo [*] Windows Temp 文件信息收集完毕
 
 
 echo [-] 正在收集预读取 Prefetch 文件
-echo ========== 预读取 Prefetch 文件 ========== >> result\info.txt 2>nul
-dir %SystemRoot%\Prefetch >> result\info.txt 2>nul
+dir %SystemRoot%\Prefetch >> result\预读取Prefetch文件.txt 2>nul
 echo [*] 预读取 Prefetch 文件信息收集完毕
 
 
 echo [-] 正在收集进程列表
-echo ========== 进程列表 ========== >> result\info.txt 2>nul
-tasklist /V >> result\info.txt 2>nul
+tasklist /V >> result\进程列表.txt 2>nul
 echo [*] 进程列表信息收集完毕
 
 
 echo [-] 正在收集路由表
-echo ========== 路由表 ========== >> result\info.txt 2>nul
-route print >> result\info.txt 2>nul
+route print >> result\路由表.txt 2>nul
 echo [*] 路由表信息收集完毕
 
 
 echo [-] 正在收集系统启动项信息
-echo ========== 系统启动项 ========== >> result\info.txt 2>nul
-reg query HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run >> result\info.txt 2>nul
-reg query HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run >> result\info.txt 2>nul
+reg query HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run >> result\系统启动项信息.txt 2>nul
+reg query HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run >> result\系统启动项信息.txt 2>nul
 echo [*] 系统启动项信息收集完毕
 
 
 echo [-] 正在收集注册表信息
-echo ========== 注册表信息 ========== >> result\info.txt 2>nul
-echo 注冊表用户启动项: >> result\info.txt 2>nul
-reg query "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\run"
-echo 注冊表系统设置启动项: >> result\info.txt 2>nul
-reg query "HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run"
-echo 注冊表系统启动项: >> result\info.txt 2>nul
-reg query "HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Runonce"
+reg query "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\run" >> result\注冊表用户启动项.txt 2>nul
+reg query "HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run" >> result\注冊表系统设置启动项.txt 2>nul
+reg query "HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Runonce" >> result\注冊表系统启动项.txt 2>nul
 echo [*] 注册表信息收集完毕
 
 
 echo [-] 正在保存系统日志至result\logs文件夹
-echo ========== 系统日志 ========== >> result\logs
 echo 系统日志: >> result\logs
 copy "C:\Windows\System32\winevt\Logs\System.evtx" result\logs\System.evtx
 echo 安全日志: >> result\logs
@@ -127,37 +110,33 @@ echo [*] 系统日志文件已保存至result\logs文件夹
 
 
 echo [-] 正在收集mstsc远程连接记录
-echo ========== mstsc远程连接记录 ========== >> result\info.txt 2>nul
-wevtutil qe "Microsoft-Windows-TerminalServices-RemoteConnectionManager/Operational" /c:10 /rd:true /f:text >> result\info.txt 2>nul
+wevtutil qe "Microsoft-Windows-TerminalServices-RemoteConnectionManager/Operational" /c:10 /rd:true /f:text >> result\mstsc远程连接记录.txt 2>nul
 echo [*] mstsc远程连接记录信息收集完毕
 
 
 echo [-] 正在收集DNS缓存记录
-echo ========== DNS 缓存记录 ========== >> result\info.txt 2>nul
-ipconfig /displaydns >> result\info.txt 2>nul
+ipconfig /displaydns >> result\DNS缓存记录.txt 2>nul
 echo [*] DSN缓存记录收集完毕
 
 
 echo [-] 正在收集系统补丁情况
-echo ========== 系统补丁 ========== >> result\info.txt 2>nul
-echo 补丁情况一: >> result\info.txt 2>nul
-wmic qfe list full >> result\info.txt 2>nul
-echo 补丁情况二: >> result\info.txt 2>nul
-systeminfo >> result\info.txt 2>nul
+echo 补丁情况一: >> result\系统补丁.txt 2>nul
+wmic qfe list full >> result\系统补丁.txt 2>nul
+echo 补丁情况二: >> result\系统补丁.txt 2>nul
+systeminfo >> result\系统补丁.txt 2>nul
 echo [*] 系统补丁情况收集完毕
 
 
 echo [-] 正在收集计算机之间会话信息
-echo ========== 计算机之间会话信息 ========== >> result\info.txt 2>nul
-echo 旧系统命令: >> result\info.txt 2>nul
-at >> result\info.txt 2>nul
-echo 新系统命令: >> result\info.txt 2>nul
-schtasks.exe >> result\info.txt 2>nul
+echo 旧系统命令: >> result\计算机之间会话信息.txt 2>nul
+at >> result\计算机之间会话信息.txt 2>nul
+echo 新系统命令: >> result\计算机之间会话信息.txt 2>nul
+schtasks.exe >> result\计算机之间会话信息.txt 2>nul
 echo [*] 计算机之间会话信息收集完毕
 
 
 echo [-] 正在收集搜索指定时间修改过的文件
-echo ========== 搜索指定时间修改过的文件 ========== >> result\info.txt 2>nul
+echo ========== 搜索指定时间修改过的文件 ========== >> result\搜索指定时间修改过的文件.txt 2>nul
 
 rem 查找指定2024年7月22日以后新增的程序
 forfiles /m *.exe /d +2024/7/23 /s /p c:\  /c:"cmd /c echo @path @fdate @ftime" 2>>null
@@ -180,49 +159,44 @@ echo [*] 指定时间修改过的文件信息已收集完毕
 
 
 echo [-] 正在收集近三天内修改的文件
-echo ========== 近三天内修改的文件 ========== >> result\info.txt 2>nul
-forfiles /p %userprofile% /s /m * /d -3 /c "cmd /c echo @path" >> result\info.txt 2>nul
+forfiles /p %userprofile% /s /m * /d -3 /c "cmd /c echo @path" >> result\近三天内修改的文件.txt 2>nul
 echo [*] 近三天内修改的文件信息收集完毕
 
 
 echo [-] 正在收集系统服务信息
-echo ========== 系统服务 ========== >> result\info.txt 2>nul
-net start >> result\info.txt 2>nul
+net start >> result\系统服务信息.txt 2>nul
 echo [*] 系统服务信息收集完毕
 
 
 echo [-] 正在收集已装软件信息
-echo ========== 已装软件 ========== >> result\info.txt 2>nul
-wmic product get name,version,vendor >> result\info.txt 2>nul
+wmic product get name,version,vendor >> result\已装软件信息.txt 2>nul
 echo [*] 已装软件信息收集完毕
 
 
 echo [-] 正在收集硬件信息
-echo ========== 硬件信息 ========== >> result\info.txt 2>nul
-echo 网卡: >> result\info.txt 2>nul
-wmic nic get name,macaddress,speed >> result\info.txt 2>nul
+echo ========== 硬件信息 ========== >> result\硬件信息.txt 2>nul
+echo 网卡: >> result\硬件信息.txt 2>nul
+wmic nic get name,macaddress,speed >> result\硬件信息.txt 2>nul
 echo 缓存: >> result\info.txt 2>nul
-wmic memcache get speed,status,purpose >> result\info.txt 2>nul
-echo 物理内存: >> result\info.txt 2>nul
-wmic memphysical get maxmemorymodulesize, speed >> result\info.txt 2>nul
+wmic memcache get speed,status,purpose >> result\硬件信息.txt 2>nul
+echo 物理内存: >> result\硬件信息.txt 2>nul
+wmic memphysical get maxmemorymodulesize, speed >> result\硬件信息.txt 2>nul
 echo [*] 集硬件信息收集完毕
 
 
 echo [-] 正在收集防火墙信息
-echo ========== 防火墙 ========== >> result\info.txt 2>nul
-netsh advfirewall show allprofiles >> result\info.txt 2>nul
+netsh advfirewall show allprofiles >> result\防火墙信息.txt 2>nul
 echo [*] 防火墙信息收集完毕
 
 
 echo [-] 正在收集USB使用情况信息
-echo ========== USB 使用信息 ========== >> result\info.txt 2>nul
-wmic usb get DeviceId,Description,Name >> result\info.txt 2>nul
+echo ========== USB 使用信息 ========== >> result\USB使用情况信息.txt 2>nul
+wmic usb get DeviceId,Description,Name >> result\USB使用情况信息.txt 2>nul
 echo [*] USB使用情况信息已收集完毕
 
 
 echo [-] 正在收集系统共享资源信息
-echo ========== 共享资源 ========== >> result\info.txt 2>nul
-net share >> result\info.txt 2>nul
+net share >> result\共享资源.txt 2>nul
 echo [-] 系统共享资源信息已收集完毕
 
 
